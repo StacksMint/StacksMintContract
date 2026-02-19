@@ -23,8 +23,8 @@
 ;;  CONSTANTS
 ;; =============================================================
 
-;; 1 STX = 1,000,000 micro-STX
-(define-constant REGISTRATION-FEE u1000000)
+;; Registration is free -- no STX fee required
+(define-constant REGISTRATION-FEE u0)
 
 ;; Maximum tokens tracked per owner (Clarity list size must be fixed)
 (define-constant MAX-TOKENS-PER-OWNER u50)
@@ -94,8 +94,7 @@
     (asserts! (> total-supply u0) ERR-INVALID-SUPPLY)
     (asserts! (< (len existing-tokens) MAX-TOKENS-PER-OWNER) ERR-LIST-FULL)
 
-    ;; Transfer registration fee to registry owner
-    (try! (stx-transfer? REGISTRATION-FEE caller registry-owner))
+    ;; No registration fee -- registration is free
 
     ;; Store token metadata
     (map-set token-registry token-contract
